@@ -9,7 +9,13 @@
     const MODULES = [
         'core/config.js',
         'core/storage.js',
-        'core/state.js'
+        'core/state.js',
+
+        'utils/dom.js',
+        
+        'features/form.js',
+
+        'data/presets.js',
     ];
 
     function fetchAndEval(url) {
@@ -45,25 +51,19 @@
 
     async function loadModulesSequential() {
         for (const file of MODULES) {
-            console.log(`📦 Loading ${file}`);
 
             await fetchAndEval(
                 `${BASE_URL}${file}?v=${Date.now()}`
             );
-
-            console.log(`✅ Loaded ${file}`);
         }
     }
 
     LNT.bootstrap = {
         async init() {
-            console.log('🚀 LNT starting');
 
             await loadModulesSequential();
 
-            console.log('Config:', LNT.config);
-            console.log('Storage:', LNT.storage);
-            console.log('State:', LNT.state);
+            LNT.dom.updateStateFromPage();
 
             this.initializeFeatures();
 
