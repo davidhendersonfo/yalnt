@@ -14,6 +14,7 @@
         'utils/dom.js',
         
         'features/form.js',
+        'features/hotkey.js',
 
         'data/presets.js',
     ];
@@ -71,6 +72,7 @@
         },
 
         initializeFeatures() {
+            LNT.hotkey.bind()
             // LNT.noChange?.init();
             // LNT.autoCall?.init();
             // LNT.hotkeys?.init();
