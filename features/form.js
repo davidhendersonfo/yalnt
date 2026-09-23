@@ -1,7 +1,7 @@
-(function(){
+(function() {
 	'use strict';
 	const LNT = window.LNT || (window.LNT = {});
-	
+
 	LNT.form = {
 		setSelectizeByValue(selectize, value) {
 			if (!selectize) return;
@@ -26,14 +26,14 @@
 			]
 			// deal with drop downs
 			selectFields.forEach(id => {
-				const selectize = 
+				const selectize =
 					LNT.dom.getSelectize(id);
-				defaultFields.includes(id)
-					? this.setSelectizeByValue(
-							selectize,
-							'NA'
-					)
-					: selectize?.clear()
+				defaultFields.includes(id) ?
+					this.setSelectizeByValue(
+						selectize,
+						'NA'
+					) :
+					selectize?.clear()
 			})
 			//deal with text area
 			LNT.dom.getNotesTextarea().value = ''
@@ -48,7 +48,7 @@
 			LNT.dom.getNoChangeButton().click()
 		},
 		applyPreset(presetName) {
-			const preset = 
+			const preset =
 				LNT.presets[
 					LNT.state.queue
 				]?.[presetName];

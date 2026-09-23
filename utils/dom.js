@@ -1,10 +1,9 @@
 // dom.js finds and stores element references and captures page data and stores into state. 
 
-(function () {
+(function() {
     'use strict';
 
     const LNT = window.LNT || (window.LNT = {});
-    console.log('dom.js loaded')
     LNT.dom = {
         $(selector, root = document) {
             return root.querySelector(selector);

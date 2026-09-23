@@ -1,7 +1,6 @@
-(function () {
+(function() {
 	'use strict';
 	const LNT = window.LNT || (window.LNT = {});
-	console.log('nochange.js loaded')
 	LNT.autoNoChange = {
 		hasRecentVerification() {
 			const dateCell = LNT.dom.getDateCell()
@@ -9,15 +8,15 @@
 				return false
 			}
 			const dateText = dateCell.textContent.trim()
-			if(!dateText){
+			if (!dateText) {
 				return false
 			}
 			const createdDate = new Date(dateText)
-			const ageDays = 
+			const ageDays =
 				(Date.now() - createdDate.getTime()) /
 				(1000 * 60 * 60 * 24);
 
-			if (ageDays <=1) {
+			if (ageDays <= 1) {
 				return true;
 			}
 		}

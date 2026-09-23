@@ -1,9 +1,9 @@
 (function() {
-	'use strict';
-	const LNT = window.LNT || (window.LNT = {});
+  'use strict';
+  const LNT = window.LNT || (window.LNT = {});
 
 
-	LNT.presets = {
+  LNT.presets = {
     general: {
       genericVoicemail: {
         status: 'CN',

@@ -17,6 +17,7 @@
         'features/form.js',
         'features/hotkey.js',
         'features/autocall.js',
+        'features/type.js',
         
 
         'data/presets.js',
@@ -85,6 +86,7 @@
             }
             LNT.autoCall?.dial();
             LNT.hotkey?.bind();
+            LNT.type.init()
             // LNT.autoCall?.init();
             // LNT.hotkeys?.init();
         }
