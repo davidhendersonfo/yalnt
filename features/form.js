@@ -7,6 +7,26 @@
 			if (!selectize) return;
 			setTimeout(() => selectize.setValue(value), 10)
 		},
+		searchAndSelect(name) {
+			const el = LNT.dom.getSelectize('select-caller')
+			el.focus()
+			el.$control_input[0].value = name
+
+			const onLoad = () => {
+				el.off('load', onLoad)
+				const item = el.search(name).items[0]
+				if (item) {
+					el.setValue(item.id)
+				}
+				setTimeout(() => {
+					el.close()
+					el.blur()
+				}, 0)
+			}
+			el.on('load', onLoad)
+
+			el.onSearchChange(name)
+		},
 		reset() {
 			const selectFields = [
 				'call_status',
