@@ -4,7 +4,7 @@
     'use strict';
 
     const LNT = window.LNT || (window.LNT = {});
-
+    console.log('dom.js loaded')
     LNT.dom = {
         $(selector, root = document) {
             return root.querySelector(selector);
@@ -35,6 +35,12 @@
             return this.$(
                 LNT.config.selectors.verificationForm
             );
+        },
+
+        getDateCell() {
+            return this.$(
+                '#verificationHistoryTable > tbody > tr > td.dt-type-date.sorting_1'
+            )
         },
 
         getNoChangeButton() {

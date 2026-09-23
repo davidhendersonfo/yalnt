@@ -7,6 +7,7 @@
     const BASE_URL = 'http://127.0.0.1:5555/';
 
     const MODULES = [
+        'features/autoNoChange.js',
         'core/config.js',
         'core/storage.js',
         'core/state.js',
@@ -16,6 +17,7 @@
         'features/form.js',
         'features/hotkey.js',
         'features/autocall.js',
+        
 
         'data/presets.js',
     ];
@@ -73,9 +75,16 @@
         },
 
         initializeFeatures() {
-            LNT.autoCall?.dial()
-            LNT.hotkey?.bind()
-            // LNT.noChange?.init();
+            //check if nochange before any other features
+            if (LNT.autoNoChange.hasRecentVerification()) {
+                setTimeout(()=> {
+                    console.log('clicking')
+                    LNT.dom.getNoChangeButton().click()
+                },1000)
+                return
+            }
+            LNT.autoCall?.dial();
+            LNT.hotkey?.bind();
             // LNT.autoCall?.init();
             // LNT.hotkeys?.init();
         }
