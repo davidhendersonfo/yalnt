@@ -17,6 +17,11 @@
 		observer: null,
 		hotkeysBound: false,
 		queue: localStorage.getItem(LNT.config.storageKeys.queue) || 'general',
+
+		setQueue(queue) {
+      this.queue = queue;
+      LNT.storage.set(LNT.config.storageKeys.queue, queue)
+    },
 	};
 
 })();
