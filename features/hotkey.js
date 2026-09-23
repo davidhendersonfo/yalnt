@@ -53,16 +53,13 @@
 	        if (event.key === 'F24') {
 	          event.preventDefault();
 	          event.stopPropagation();
-	          console.log('testing mode: skipping submit')
-	          // LNT.form.submit()
+	          LNT.form.submit()
 	          return;
 	        }
 	        if (event.key === 'F23') {
 	          event.preventDefault();
 	          event.stopPropagation();
-	         	console.log('testing mode: skipping skip')
-
-	          // LNT.form.skip()
+	          LNT.form.skip()
 	          return;
 	        }
 
