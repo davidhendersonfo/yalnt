@@ -8,24 +8,42 @@
 			setTimeout(() => selectize.setValue(value), 10)
 		},
 		searchAndSelect(name) {
-			const el = LNT.dom.getSelectize('select-caller')
-			el.focus()
-			el.$control_input[0].value = name
+			return new Promise((resolve) => {
+				const el = LNT.dom.getSelectize('select-caller')
+				const industryEl = LNT.dom.getSelectize('select-industry') // adjust id if different
+				el.focus()
+				el.$control_input[0].value = name
 
-			const onLoad = () => {
-				el.off('load', onLoad)
-				const item = el.search(name).items[0]
-				if (item) {
-					el.setValue(item.id)
+				const onLoad = () => {
+					el.off('load', onLoad)
+					const item = el.search(name).items[0]
+					if (item) {
+						el.setValue(item.id)
+					}
+
+					// wait for the site's own auto-populate to actually land
+					const onIndustryChange = () => {
+						industryEl.off('change', onIndustryChange)
+						setTimeout(() => {
+							el.close()
+							el.blur()
+							resolve()
+						}, 0)
+					}
+					industryEl.on('change', onIndustryChange)
+
+					// fallback in case industry never changes for this caller
+					setTimeout(() => {
+						industryEl.off('change', onIndustryChange)
+						el.close()
+						el.blur()
+						resolve()
+					}, 5000)
 				}
-				setTimeout(() => {
-					el.close()
-					el.blur()
-				}, 0)
-			}
-			el.on('load', onLoad)
+				el.on('load', onLoad)
 
-			el.onSearchChange(name)
+				el.onSearchChange(name)
+			})
 		},
 		reset() {
 			const selectFields = [
@@ -67,7 +85,7 @@
 		noChange() {
 			LNT.dom.getNoChangeButton().click()
 		},
-		applyPreset(presetName) {
+		async applyPreset(presetName) {
 			const preset =
 				LNT.presets[
 					LNT.state.queue
@@ -79,6 +97,7 @@
 			}
 
 			this.reset()
+			console.log('reset')
 			//translate for selectize names
 			const fields = {
 				'call_status': preset.status,
@@ -86,8 +105,13 @@
 				'select-purpose': preset.purpose,
 				'select-notes': preset.notes,
 			}
-
+			if (preset.name) {
+				console.log('starting searchAndSelect')
+				await this.searchAndSelect(preset.name)
+			}
+			console.log('finished searchAndSelect')
 			for (const field in fields) {
+				console.log('starting fields loop')
 				if (fields[field] !== undefined) {
 					this.setSelectizeByValue(
 						LNT.dom.getSelectize(field),
