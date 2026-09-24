@@ -122,10 +122,17 @@
         purpose: 'PN',
         textNotes: 'Phone screening',
       },
-      busy: {
-        status: 'BU',
-        connection: 'NA',
-        purpose: 'UK',
+      nrcc: {
+        name: 'National Republican Congressional Committee',
+        status: 'CN',
+        purpose: 'PO',
+        connection: 'RM',
+      },
+      nrsc: {
+        name: 'National Republican Senatorial Committee',
+        status: 'CN',
+        purpose: 'PO',
+        connection: 'RM',
       },
     },
   };
