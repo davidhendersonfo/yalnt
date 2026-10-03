@@ -106,12 +106,9 @@
 				'select-notes': preset.notes,
 			}
 			if (preset.name) {
-				console.log('starting searchAndSelect')
 				await this.searchAndSelect(preset.name)
 			}
-			console.log('finished searchAndSelect')
 			for (const field in fields) {
-				console.log('starting fields loop')
 				if (fields[field] !== undefined) {
 					this.setSelectizeByValue(
 						LNT.dom.getSelectize(field),

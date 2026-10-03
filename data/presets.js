@@ -9,20 +9,20 @@
         status: 'CN',
         connection: 'GV',
         purpose: 'UK',
-        notes: '23'
+        notes: '19'
       },
 
       voicemail: {
         status: 'CN',
         connection: 'VM',
         purpose: 'UK',
-        notes: 'NA'
+        notes: '19'
       },
 
       disconnected: {
         status: 'DI',
         connection: 'NA',
-        purpose: 'S2',
+        purpose: 'UK',
         notes: '17'
       },
 
@@ -30,7 +30,7 @@
         status: 'BU',
         connection: 'NA',
         purpose: 'UK',
-        notes: 'NA'
+        notes: '19'
       },
 
       notAvailable: {
@@ -89,15 +89,21 @@
       },
       localHomeBuyer: {
         status: 'CN',
-        connection: 'PN',
-        purpose: 'S3',
-        textNotes: 'Local Home Buyers'
+        connection: 'RM',
+        purpose: 'S2',
+        textNotes: 'no one is available, press 2 to be added to dnc list'
       },
       destinationDialedDisabled: {
         status: 'CN',
         connection: 'RM',
         purpose: 'UK',
         textNotes: 'Destination Dialed Disabled for your account'
+      },
+      ext5: {
+        status: 'CN',
+        connection: 'RM',
+        purpose: 'S2',
+        textNotes: 'Extension 5 is on the phone'
       },
     },
     tmo: {
@@ -133,6 +139,12 @@
         status: 'CN',
         purpose: 'PO',
         connection: 'RM',
+      },
+      busy: {
+        status: 'BU',
+        connection: 'NA',
+        purpose: 'UK',
+        notes: '19'
       },
     },
   };

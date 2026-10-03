@@ -19,6 +19,7 @@
 					F20: 'americanTaxAdvisors',
 					F21: 'localHomeBuyer',
 					F22: 'destinationDialedDisabled',
+					F2: 'ext5'
 				},
 				tmo: {
 					F13: 'personalNumberVM',

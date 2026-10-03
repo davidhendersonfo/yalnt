@@ -76,7 +76,7 @@
         },
 
         initializeFeatures() {
-            //check if nochange before any other features
+            // check if nochange before any other features
             if (LNT.autoNoChange.hasRecentVerification()) {
                 setTimeout(()=> {
                     console.log('clicking')
