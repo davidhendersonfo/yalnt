@@ -13,10 +13,12 @@
         'core/state.js',
 
         'utils/dom.js',
+        'utils/ui.js',
         
         'features/form.js',
         'features/hotkey.js',
         'features/autocall.js',
+        'features/numberLookup.js',
         
         
 
@@ -84,9 +86,10 @@
                 },1000)
                 return
             }
-            LNT.autoCall?.dial();
+            // LNT.autoCall?.dial();
             LNT.hotkey?.bind();
-            
+            LNT.ui.build();
+            LNT.numberLookup.run(LNT.dom.getPhoneNumber())
             // LNT.autoCall?.init();
             // LNT.hotkeys?.init();
         }
