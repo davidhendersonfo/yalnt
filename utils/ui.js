@@ -1,4 +1,4 @@
-// ui.js finds and stores element references and captures page data and stores into state.
+// ui.js builds the boxes, injects styles, and stores element references for the features to fill in.
 
 (function() {
     'use strict';
@@ -12,7 +12,7 @@
             const style = document.createElement('style');
             style.id = 'lnt-styles';
             style.textContent = `
-                .lnt-container { display: flex; gap: 12px; justify-content: center; align-items: stretch; margin: 12px 0; }
+                .lnt-container { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: stretch; margin: 12px 0; }
                 .lnt-box { border: 1px solid #ddd; border-radius: 4px; padding: 10px 14px; background: #fafafa; }
                 .lnt-box-title { font-weight: bold; margin-bottom: 6px; white-space: nowrap; }
                 .lnt-box-query { margin-left: 14px; }
@@ -38,6 +38,20 @@
                     max-height: 5.4em; /* 4 lines */
                     overflow: hidden;  /* clipped silently, no ellipsis */
                 }
+
+                /* honeypot transcripts: shown in full, body scrolls if there are many matches */
+                /* contain: size = this box's content doesn't count toward row height, so the
+                   row stays as tall as the lookup box and this one stretches to match it */
+                .lnt-hp {
+                    flex: 1 1 0; min-width: 260px; max-width: 520px; min-height: 6em;
+                    contain: size;
+                    display: flex; flex-direction: column;
+                }
+                .lnt-hp > div:last-child { flex: 1 1 0; min-height: 0; overflow-y: auto; }
+                .lnt-hp-item { margin-bottom: 8px; }
+                .lnt-hp-item:last-child { margin-bottom: 0; }
+                .lnt-hp-meta { color: #555; font-size: 12px; }
+                .lnt-hp-text { font-size: 13px; line-height: 1.35; overflow-wrap: anywhere; }
             `;
             document.head.appendChild(style);
         },
@@ -94,28 +108,40 @@
 
             const autoCall = this.makeCheckbox('lnt-auto-call', 'Auto Call');
             const noChange = this.makeCheckbox('lnt-no-change', 'No Change');
+            const hpTranscript = this.makeCheckbox('lnt-hp-transcript', 'Hp Transcripts');
 
             autoCall.input.checked = LNT.state.autoCallEnabled;
             noChange.input.checked = LNT.state.autoNoChangeEnabled;
+            hpTranscript.input.checked = LNT.state.hpTranscriptEnabled;
 
             autoCall.input.addEventListener('change', e => LNT.state.setAutoCall(e.target.checked));
             noChange.input.addEventListener('change', e => LNT.state.setAutoNoChange(e.target.checked));
+            hpTranscript.input.addEventListener('change', e => LNT.state.setHpTranscript(e.target.checked));
 
-            phone.body.append(line1, autoCall.label, noChange.label);
+            phone.body.append(line1, autoCall.label, noChange.label, hpTranscript.label);
             container.append(phone.box, lookup.box); // phone first = on the left
+
+            // honeypot box only exists when the toggle was on at page load
+            let hp = null;
+            if (LNT.state.hpTranscriptEnabled) {
+                hp = this.makeBox('lnt-hp', 'Honeypot Transcripts');
+                container.append(hp.box);
+            }
 
             const header = LNT.dom.$('h1');
             header.after(container);
 
-            // keep references so draw() can update things later
+            // keep references so features can update things later
             this.refs = {
                 container,
                 line1,
                 phoneBody: phone.body,
                 lookupBody: lookup.body,
                 lookupQuery,
+                hpBody: hp ? hp.body : null,
                 autoCall: autoCall.input,
                 noChange: noChange.input,
+                hpTranscript: hpTranscript.input,
             };
         },
 

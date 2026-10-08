@@ -16,6 +16,7 @@
         autoCall: 'lnt_autocall',
         autoNoChange: 'lnt_auto_nochange',
         queue: 'lnt_queue',
+        hpTranscript: 'lnt_hp_transcript',
     },
 };
 })();

@@ -7,7 +7,6 @@
     const BASE_URL = 'http://127.0.0.1:5555/';
 
     const MODULES = [
-        'features/autoNoChange.js',
         'core/config.js',
         'core/storage.js',
         'core/state.js',
@@ -15,12 +14,12 @@
         'utils/dom.js',
         'utils/ui.js',
 
+        'features/autoNoChange.js',
         'features/form.js',
         'features/hotkey.js',
         'features/autoCall.js',
         'features/numberLookup.js',
-
-
+        'features/hpTranscript.js',
 
         'data/presets.js',
     ];
@@ -78,7 +77,7 @@
         },
 
         initializeFeatures() {
-            // build the UI first so the toggles are always reachable
+            // build the UI first so the toggles (and optional boxes) are always reachable
             LNT.ui.build();
 
             // auto no-change: only when toggled on AND the number was verified recently
@@ -98,9 +97,14 @@
         },
 
         startNormalFlow() {
+            const number = LNT.dom.getPhoneNumber();
+
+            // data lookups first, so a problem with dialing can't block them
+            LNT.numberLookup.run(number);
+            if (LNT.state.hpTranscriptEnabled) LNT.hpTranscript.run(number);
+
             if (LNT.state.autoCallEnabled) LNT.autoCall.dial();
             LNT.hotkey?.bind();
-            LNT.numberLookup.run(LNT.dom.getPhoneNumber());
         },
     };
 
