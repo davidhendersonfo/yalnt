@@ -1,4 +1,4 @@
-// dom.js finds and stores element references and captures page data and stores into state. 
+// ui.js finds and stores element references and captures page data and stores into state.
 
 (function() {
     'use strict';
@@ -11,20 +11,33 @@
             if (document.getElementById('lnt-styles')) return;
             const style = document.createElement('style');
             style.id = 'lnt-styles';
-            // in injectStyles(), replace the CSS text with:
             style.textContent = `
-                .lnt-container { display: flex; gap: 12px; justify-content: center; align-items: flex-start; margin: 12px 0; }
+                .lnt-container { display: flex; gap: 12px; justify-content: center; align-items: stretch; margin: 12px 0; }
                 .lnt-box { border: 1px solid #ddd; border-radius: 4px; padding: 10px 14px; background: #fafafa; }
-                .lnt-lookup { flex: 1 1 0; min-width: 260px; max-width: 520px; }
-                .lnt-box-title { font-weight: bold; margin-bottom: 6px; }
+                .lnt-box-title { font-weight: bold; margin-bottom: 6px; white-space: nowrap; }
+                .lnt-box-query { margin-left: 14px; }
                 .lnt-line { margin: 0 0 6px; }
                 .lnt-check { margin-right: 14px; cursor: pointer; }
 
+                .lnt-lookup { flex: 1 1 0; min-width: 260px; max-width: 1100px; }
                 .lnt-lookup a { overflow-wrap: anywhere; }
-                .lnt-result { margin-bottom: 10px; }
+
+                /* body: cards share the row evenly, footer takes its own full row */
+                .lnt-lookup > div:last-child {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 6px 16px;
+                }
+                .lnt-lookup > div:last-child > :not(.lnt-result) { flex: 0 0 100%; }
+
+                .lnt-result { flex: 1 1 240px; min-width: 0; margin-bottom: 0; }
                 .lnt-result-title { font-weight: bold; }
                 .lnt-result-domain { color: #28a745; font-size: 12px; }
-                .lnt-result-snippet { color: #555; font-size: 12px; }
+                .lnt-result-snippet {
+                    color: #555; font-size: 12px; line-height: 1.35;
+                    max-height: 5.4em; /* 4 lines */
+                    overflow: hidden;  /* clipped silently, no ellipsis */
+                }
             `;
             document.head.appendChild(style);
         },
@@ -41,7 +54,7 @@
                 input
             };
         },
-        // new helper, next to makeCheckbox
+
         makeBox(extraClass, title) {
             const box = document.createElement('div');
             box.className = `lnt-box ${extraClass}`;
@@ -54,6 +67,7 @@
             box.append(heading, body);
             return {
                 box,
+                heading,
                 body
             };
         },
@@ -66,9 +80,13 @@
             container.id = 'lnt-container';
             container.className = 'lnt-container';
 
-            // in build(): swap the phoneBox setup for makeBox, and add the lookup box
             const phone = this.makeBox('lnt-phone', 'Phone');
             const lookup = this.makeBox('lnt-lookup', 'Number Lookup');
+
+            // "Results for <number>" lives inside the lookup heading, same line as the title
+            const lookupQuery = document.createElement('span');
+            lookupQuery.className = 'lnt-box-query';
+            lookup.heading.append(lookupQuery);
 
             const line1 = document.createElement('div');
             line1.className = 'lnt-line';
@@ -77,9 +95,15 @@
             const autoCall = this.makeCheckbox('lnt-auto-call', 'Auto Call');
             const noChange = this.makeCheckbox('lnt-no-change', 'No Change');
 
+            autoCall.input.checked = LNT.state.autoCallEnabled;
+            noChange.input.checked = LNT.state.autoNoChangeEnabled;
+
+            autoCall.input.addEventListener('change', e => LNT.state.setAutoCall(e.target.checked));
+            noChange.input.addEventListener('change', e => LNT.state.setAutoNoChange(e.target.checked));
+
             phone.body.append(line1, autoCall.label, noChange.label);
             container.append(phone.box, lookup.box); // phone first = on the left
-            
+
             const header = LNT.dom.$('h1');
             header.after(container);
 
@@ -89,10 +113,15 @@
                 line1,
                 phoneBody: phone.body,
                 lookupBody: lookup.body,
+                lookupQuery,
                 autoCall: autoCall.input,
                 noChange: noChange.input,
             };
         },
+
+        // setLookupQuery(number) {
+        //     this.refs.lookupQuery.textContent = number ? `Results for ${number}` : '';
+        // },
 
         draw() {
             // later: this.refs.line1.textContent = LNT.state.something;

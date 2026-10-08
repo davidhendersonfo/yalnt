@@ -71,7 +71,7 @@
 
     function render(body, searchNumber, results, emptyMessage = 'No results found.') {
         body.replaceChildren();
-        body.append(createEl('div', 'lnt-box-title', `Results for ${searchNumber}`));
+        // body.append(createEl('div', 'lnt-box-title', `Results for ${searchNumber}`));
 
         if (results.length === 0) {
             body.append(createEl('div', 'lnt-result-snippet', emptyMessage));

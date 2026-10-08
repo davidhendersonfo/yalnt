@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
 
     const LNT = window.LNT || (window.LNT = {});
@@ -14,13 +14,13 @@
 
         'utils/dom.js',
         'utils/ui.js',
-        
+
         'features/form.js',
         'features/hotkey.js',
-        'features/autocall.js',
+        'features/autoCall.js',
         'features/numberLookup.js',
-        
-        
+
+
 
         'data/presets.js',
     ];
@@ -78,21 +78,30 @@
         },
 
         initializeFeatures() {
-            // check if nochange before any other features
-            if (LNT.autoNoChange.hasRecentVerification()) {
-                setTimeout(()=> {
-                    console.log('clicking')
-                    LNT.dom.getNoChangeButton().click()
-                },1000)
-                return
-            }
-            // LNT.autoCall?.dial();
-            LNT.hotkey?.bind();
+            // build the UI first so the toggles are always reachable
             LNT.ui.build();
-            LNT.numberLookup.run(LNT.dom.getPhoneNumber())
-            // LNT.autoCall?.init();
-            // LNT.hotkeys?.init();
-        }
+
+            // auto no-change: only when toggled on AND the number was verified recently
+            if (LNT.state.autoNoChangeEnabled && LNT.autoNoChange.hasRecentVerification()) {
+                setTimeout(() => {
+                    // re-check in case it was switched off during the delay
+                    if (LNT.state.autoNoChangeEnabled) {
+                        LNT.dom.getNoChangeButton().click();
+                    } else {
+                        this.startNormalFlow();
+                    }
+                }, 1000);
+                return;
+            }
+
+            this.startNormalFlow();
+        },
+
+        startNormalFlow() {
+            if (LNT.state.autoCallEnabled) LNT.autoCall.dial();
+            LNT.hotkey?.bind();
+            LNT.numberLookup.run(LNT.dom.getPhoneNumber());
+        },
     };
 
     async function start() {

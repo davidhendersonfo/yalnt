@@ -22,6 +22,15 @@
       this.queue = queue;
       LNT.storage.set(LNT.config.storageKeys.queue, queue)
     },
+    setAutoCall(enabled) {
+			this.autoCallEnabled = enabled;
+			LNT.storage.set(LNT.config.storageKeys.autoCall, String(enabled));
+		},
+
+		setAutoNoChange(enabled) {
+			this.autoNoChangeEnabled = enabled;
+			LNT.storage.set(LNT.config.storageKeys.autoNoChange, String(enabled));
+		},
 	};
 
 })();
