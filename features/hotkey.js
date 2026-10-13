@@ -26,8 +26,14 @@
 					F14: 'personalNumberGV',
 					F15: 'personalNumberAnswered',
 					F16: 'phoneScreening',
-					F17: 'busy'
+					F17: 'busy',
+					F18: 'vmNotSetup',
 				},
+				wfb: {
+					F13: 'vmNotSetup',
+					F14: 'genericVoicemail',
+
+				}
 			};
 			document.addEventListener(
 				'keydown',
@@ -48,15 +54,21 @@
 								event.stopPropagation()
 								LNT.state.setQueue('tmo')
 								return;
+							case 'F15':
+								event.preventDefault()
+								event.stopPropagation()
+								LNT.state.setQueue('wfb')
+								return;
+
 						}
 					}
 
-					if (event.key === 'F24') {
-						event.preventDefault();
-						event.stopPropagation();
-						LNT.form.submit()
-						return;
-					}
+					// if (event.key === 'F24') {
+					// 	event.preventDefault();
+					// 	event.stopPropagation();
+					// 	LNT.form.submit()
+					// 	return;
+					// }
 					if (event.key === 'F23') {
 						event.preventDefault();
 						event.stopPropagation();

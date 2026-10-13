@@ -96,8 +96,12 @@
 				return;
 			}
 
+			//WFB TEXT PROTECTION
+			const keepNotes = LNT.state.queue === 'wfb' ?
+				LNT.dom.getNotesTextarea().value :
+				null;
+
 			this.reset()
-			console.log('reset')
 			//translate for selectize names
 			const fields = {
 				'call_status': preset.status,
@@ -116,8 +120,12 @@
 					)
 				}
 			}
-			if (preset.textNotes) {
-				LNT.dom.getNotesTextarea().value = preset.textNotes
+			const notesEl = LNT.dom.getNotesTextarea()
+
+			if (keepNotes !== null) {
+				notesEl.value = [keepNotes, preset.textNotes].filter(Boolean).join(' ')
+			} else if (preset.textNotes) {
+				notesEl.value = preset.textNotes
 			}
 		},
 	}

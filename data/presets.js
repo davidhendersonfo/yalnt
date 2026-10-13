@@ -128,6 +128,36 @@
         purpose: 'PN',
         textNotes: 'Phone screening',
       },
+
+      busy: {
+        status: 'BU',
+        connection: 'NA',
+        purpose: 'UK',
+        notes: '19'
+      },
+      vmNotSetup: {
+        status: 'CN',
+        connection: 'RM',
+        purpose: 'UK',
+        textNotes: 'voicemail box that hasnt been setup yet',
+      }
+
+    },
+    wfb: {
+      vmNotSetup: {
+        status: 'CN',
+        connection: 'RM',
+        purpose: 'UK',
+        textNotes: 'voicemail box that hasnt been setup yet',
+      },
+      genericVoicemail: {
+        status: 'CN',
+        connection: 'GV',
+        purpose: 'UK',
+        notes: '19'
+      },
+    },
+    named: {
       nrcc: {
         name: 'National Republican Congressional Committee',
         status: 'CN',
@@ -139,12 +169,6 @@
         status: 'CN',
         purpose: 'PO',
         connection: 'RM',
-      },
-      busy: {
-        status: 'BU',
-        connection: 'NA',
-        purpose: 'UK',
-        notes: '19'
       },
     },
   };
