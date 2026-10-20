@@ -41,6 +41,13 @@
                 '#verificationHistoryTable > tbody > tr > td.dt-type-date.sorting_1'
             )
         },
+        getCtCell() {
+            return this.$('body > main > h6 > span');
+        },
+        hasCt() {
+            const el = this.getCtCell()
+            return !!el && /CT\.com number/i.test(el.textContent)
+        },
 
         getNoChangeButton() {
             return this.$('#noChangeBtn');

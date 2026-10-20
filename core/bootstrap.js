@@ -81,10 +81,11 @@
             LNT.ui.build();
 
             // auto no-change: only when toggled on AND the number was verified recently
-            if (LNT.state.autoNoChangeEnabled && LNT.autoNoChange.hasRecentVerification()) {
+            if (LNT.state.autoNoChangeEnabled && (LNT.autoNoChange.hasRecentVerification() || LNT.dom.hasCt())) {
                 setTimeout(() => {
                     // re-check in case it was switched off during the delay
                     if (LNT.state.autoNoChangeEnabled) {
+                        console.log('no changing')
                         LNT.dom.getNoChangeButton().click();
                     } else {
                         this.startNormalFlow();

@@ -32,6 +32,9 @@
 				wfb: {
 					F13: 'vmNotSetup',
 					F14: 'genericVoicemail',
+					F15: 'busy',
+					F16: 'miscLoanScamRecording',
+					F17: 'personalNumberVM',
 
 				}
 			};
@@ -63,12 +66,12 @@
 						}
 					}
 
-					// if (event.key === 'F24') {
-					// 	event.preventDefault();
-					// 	event.stopPropagation();
-					// 	LNT.form.submit()
-					// 	return;
-					// }
+					if (event.key === 'F24') {
+						event.preventDefault();
+						event.stopPropagation();
+						LNT.form.submit()
+						return;
+					}
 					if (event.key === 'F23') {
 						event.preventDefault();
 						event.stopPropagation();

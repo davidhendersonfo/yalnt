@@ -156,6 +156,23 @@
         purpose: 'UK',
         notes: '19'
       },
+      busy: {
+        status: 'BU',
+        connection: 'NA',
+        purpose: 'UK',
+        notes: '19'
+      },
+       miscLoanScamRecording: {
+        status: 'CN',
+        connection: 'RM',
+        purpose: 'S2',
+        notes: '6'
+      },
+      personalNumberVM: {
+        status: 'CN',
+        connection: "VM",
+        purpose: "PN",
+      },
     },
     named: {
       nrcc: {
